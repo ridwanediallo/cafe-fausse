@@ -129,3 +129,47 @@ class Customer(db.Model):
         return f'<Customer {self.name} - {self.email}>'
 
 
+
+class Reservation(db.Model):
+    """Table reservations"""
+    __tablename__ = 'reservations'
+    
+    reservation_id = db.Column(db.Integer, primary_key=True)
+    customer_id = db.Column(db.Integer, db.ForeignKey('customers.customer_id'), nullable=False)
+    table_id = db.Column(db.Integer, db.ForeignKey('tables.table_id'), nullable=False)
+    start_time = db.Column(db.DateTime, nullable=False)
+    end_time = db.Column(db.DateTime, nullable=False)
+    guest_count = db.Column(db.Integer, nullable=False)
+    status = db.Column(db.String(20), default='confirmed')
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    
+    def to_dict(self, include_customer=False, include_table=False):
+        """Convert model to dictionary"""
+        result = {
+            'reservation_id': self.reservation_id,
+            'customer_id': self.customer_id,
+            'table_id': self.table_id,
+            'start_time': self.start_time.isoformat() if self.start_time else None,
+            'end_time': self.end_time.isoformat() if self.end_time else None,
+            'guest_count': self.guest_count,
+            'status': self.status,
+            'created_at': self.created_at.isoformat() if self.created_at else None
+        }
+        
+        if include_customer and self.customer:
+            result['customer'] = {
+                'name': self.customer.name,
+                'email': self.customer.email,
+                'phone': self.customer.phone
+            }
+        
+        if include_table and self.table:
+            result['table'] = {
+                'table_id': self.table.table_id,
+                'capacity': self.table.capacity
+            }
+        
+        return result
+    
+    def __repr__(self):
+        return f'<Reservation {self.reservation_id} - Table {self.table_id} at {self.start_time}>'
