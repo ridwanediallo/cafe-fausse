@@ -57,3 +57,41 @@ class MenuCategory(db.Model):
     
     def __repr__(self):
         return f'<MenuCategory {self.category_name}>'
+
+
+
+class MenuItem(db.Model):
+    """Individual menu items"""
+    __tablename__ = 'menu_items'
+
+    item_id = db.Column(db.Integer, primary_key=True)
+    category_id = db.Column(db.Integer, db.ForeignKey('menu_categories.category_id'), nullable=False)
+    item_name = db.Column(db.String(100), nullable=False)
+    description = db.Column(db.Text)
+    price = db.Column(db.Numeric(10, 2), nullable=False)
+    is_available = db.Column(db.Boolean, default=True)
+    display_order = db.Column(db.Integer, nullable=False)
+    image_url = db.Column(db.String(255))
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+
+    def to_dict(self):
+        """Convert model to dictionary"""
+        return {
+            'item_id': self.item_id,
+            'category_id': self.category_id,
+            'item_name': self.item_name,
+            'description': self.description,
+            'price': float(self.price),
+            'is_available': self.is_available,
+            'display_order': self.display_order,
+            'image_url': self.image_url,
+            'created_at': self.created_at.isoformat() if self.created_at else None,
+            'updated_at': self.updated_at.isoformat() if self.updated_at else None
+        }
+
+    def __repr__(self):
+        return f'<MenuItem {self.item_name} - ${self.price}>'
+
+
+
