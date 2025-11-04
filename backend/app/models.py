@@ -95,3 +95,37 @@ class MenuItem(db.Model):
 
 
 
+class Customer(db.Model):
+    """Customer information"""
+    __tablename__ = 'customers'
+
+    customer_id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(100), nullable=False)
+    email = db.Column(db.String(255), unique=True, nullable=False)
+    phone = db.Column(db.String(20))
+    newsletter_signup = db.Column(db.Boolean, default=False)
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+
+    # Relationship
+    reservations = db.relationship('Reservation', backref='customer', lazy=True, cascade='all, delete-orphan')
+
+    def to_dict(self, include_reservations=False):
+        """Convert model to dictionary"""
+        result = {
+            'customer_id': self.customer_id,
+            'name': self.name,
+            'email': self.email,
+            'phone': self.phone,
+            'newsletter_signup': self.newsletter_signup,
+            'created_at': self.created_at.isoformat() if self.created_at else None
+        }
+
+        if include_reservations:
+            result['reservations'] = [res.to_dict() for res in self.reservations]
+
+        return result
+
+    def __repr__(self):
+        return f'<Customer {self.name} - {self.email}>'
+
+
