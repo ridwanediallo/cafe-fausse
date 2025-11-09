@@ -14,7 +14,7 @@
   margin: 0 auto;
   padding: 0 var(--spacing-md);
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  grid-template-columns: repeat(5, 1fr);
   gap: var(--spacing-md);
 }
 
@@ -71,7 +71,7 @@
 
 /* Newsletter Section */
 .newsletter-section {
-  grid-column: span 2;
+  grid-column: span 1;
 }
 
 .newsletter-signup {
