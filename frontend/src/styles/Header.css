@@ -1,0 +1,160 @@
+.header {
+  background-color: var(--dark-bg);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+}
+
+.header-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Logo */
+.logo h1 {
+  color: var(--secondary-color);
+  font-size: 1.8rem;
+  margin: 0;
+  font-family: var(--font-heading);
+  transition: var(--transition);
+}
+
+.logo a {
+  text-decoration: none;
+}
+
+.logo h1:hover {
+  color: var(--text-light);
+}
+
+/* Navigation */
+.nav-list {
+  list-style: none;
+  display: flex;
+  gap: 2rem;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-item {
+  margin: 0;
+}
+
+.nav-link {
+  color: var(--text-light);
+  text-decoration: none;
+  font-size: 1rem;
+  font-weight: 500;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  transition: var(--transition);
+  position: relative;
+}
+
+.nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 2px;
+  background-color: var(--secondary-color);
+  transition: var(--transition);
+}
+
+.nav-link:hover {
+  color: var(--secondary-color);
+}
+
+.nav-link:hover::after {
+  width: 80%;
+}
+
+.nav-link.active {
+  color: var(--secondary-color);
+  background-color: rgba(212, 175, 55, 0.1);
+}
+
+.nav-link.active::after {
+  width: 80%;
+}
+
+/* Contact */
+.header-contact {
+  display: flex;
+  align-items: center;
+}
+
+.phone-link {
+  color: var(--text-light);
+  font-weight: 500;
+  padding: 0.5rem 1rem;
+  border: 2px solid var(--secondary-color);
+  border-radius: 4px;
+  transition: var(--transition);
+}
+
+.phone-link:hover {
+  background-color: var(--secondary-color);
+  color: var(--dark-bg);
+}
+
+/* Responsive Design */
+@media (max-width: 968px) {
+  .header-container {
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .nav-list {
+    gap: 1rem;
+  }
+
+  .nav-link {
+    padding: 0.5rem 0.75rem;
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .header-container {
+    padding: 1rem;
+  }
+
+  .logo h1 {
+    font-size: 1.5rem;
+  }
+
+  .nav {
+    width: 100%;
+    order: 3;
+  }
+
+  .nav-list {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.5rem;
+  }
+
+  .nav-link {
+    font-size: 0.85rem;
+    padding: 0.4rem 0.6rem;
+  }
+
+  .header-contact {
+    order: 2;
+  }
+
+  .phone-link {
+    font-size: 0.9rem;
+    padding: 0.4rem 0.8rem;
+  }
+}
